@@ -167,7 +167,7 @@ namespace Test
         [Test]
         public static void TestAbilityToIDTMTDiagnosticIons()
         {
-            var origDataFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\tmt18test2.mzML");
+            var origDataFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","tmt18test2.mzML");
             var scans = Mzml.LoadAllStaticData(origDataFile).GetAllScansList();
             var tolerance = new PpmTolerance(20);
             int roundTo = 5;
@@ -204,12 +204,12 @@ namespace Test
         public static void TestTmtQuantificationOutput()
         {
             var searchTask = Toml.ReadFile<SearchTask>(
-                Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_test\TMT-Task1-SearchTaskconfig.toml"),
+                Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_test","TMT-Task1-SearchTaskconfig.toml"),
                 MetaMorpheusTask.tomlConfig);
 
             List<(string, MetaMorpheusTask)> taskList = new List<(string, MetaMorpheusTask)> { ("search", searchTask) };
-            string mzmlName = @"TMT_test\VA084TQ_6.mzML";
-            string fastaName =  @"TMT_test\mouseTMT.fasta";
+            string mzmlName =Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_test","VA084TQ_6.mzML");
+            string fastaName =  Path.Combine(TestContext.CurrentContext.TestDirectory,@"TMT_test","mouseTMT.fasta");
             string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestTmtOutput");
             var engine = new EverythingRunnerEngine(taskList, new List<string> { mzmlName }, new List<DbForTask> { new DbForTask(fastaName, false) }, outputFolder);
             engine.Run();
@@ -248,12 +248,12 @@ namespace Test
         public static void TestDiLeuQuantificationOutput()
         {
             var searchTask = Toml.ReadFile<SearchTask>(
-                Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_test\DiLeu-12plex-Task1-SearchTaskconfig.toml"),
+                Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_test","DiLeu-12plex-Task1-SearchTaskconfig.toml"),
                 MetaMorpheusTask.tomlConfig);
 
             List<(string, MetaMorpheusTask)> taskList = new List<(string, MetaMorpheusTask)> { ("search", searchTask) };
-            string mzmlName = @"TMT_test\DiLeu_Slice_PXD029269.mzML";
-            string fastaName = @"TMT_test\DiLeuSlice.fasta";
+            string mzmlName = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_test","DiLeu_Slice_PXD029269.mzML");
+            string fastaName = Path.Combine(TestContext.CurrentContext.TestDirectory,@"TMT_test","DiLeuSlice.fasta");
             string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestDiLeuOutput");
             var engine = new EverythingRunnerEngine(taskList, new List<string> { mzmlName }, new List<DbForTask> { new DbForTask(fastaName, false) }, outputFolder);
             engine.Run();
@@ -273,7 +273,7 @@ namespace Test
 
             // Same data as above, but here we're pretending that DiLeu 4-plex was used
             searchTask = Toml.ReadFile<SearchTask>(
-                Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_test\DiLeu-4plex-Task1-SearchTaskconfig.toml"),
+                Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_test","DiLeu-4plex-Task1-SearchTaskconfig.toml"),
                 MetaMorpheusTask.tomlConfig);
             taskList = new List<(string, MetaMorpheusTask)> { ("search", searchTask) };
             engine = new EverythingRunnerEngine(taskList, new List<string> { mzmlName }, new List<DbForTask> { new DbForTask(fastaName, false) }, outputFolder);
@@ -450,16 +450,16 @@ namespace Test
         [Test]
         public static void TestDoNotCountDiagnosticIonsInScore_HCD()
         {
-            var myTomlPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_Test\TMT-Task1-SearchTaskconfig.toml");
+            var myTomlPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_Test","TMT-Task1-SearchTaskconfig.toml");
             var searchTaskLoaded = Toml.ReadFile<SearchTask>(myTomlPath, MetaMorpheusTask.tomlConfig);
-            string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_Test\TestOutput");
-            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_Test\VA084TQ_6.mzML");
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_Test\mouseTmt.fasta");
+            string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_Test","TestOutput");
+            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_Test","VA084TQ_6.mzML");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TMT_Test","mouseTmt.fasta");
 
             var engineToml = new EverythingRunnerEngine(new List<(string, MetaMorpheusTask)> { ("SearchTOML", searchTaskLoaded) }, new List<string> { myFile }, new List<DbForTask> { new DbForTask(myDatabase, false) }, outputFolder);
             engineToml.Run();
 
-            string psmFile = Path.Combine(outputFolder, @"SearchTOML\AllPSMs.psmtsv");
+            string psmFile = Path.Combine(outputFolder, @"SearchTOML","AllPSMs.psmtsv");
 
             List<PsmFromTsv> parsedPsms = PsmTsvReader.ReadTsv(psmFile, out var warnings);
             PsmFromTsv psm = parsedPsms.First();

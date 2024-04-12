@@ -14,7 +14,6 @@ using System.Text.RegularExpressions;
 using TaskLayer;
 using ThermoFisher.CommonCore.Data;
 using ThermoFisher.CommonCore.Data.Business;
-using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace Test
 {
@@ -33,10 +32,10 @@ namespace Test
 
             // set up original spectra file (input to calibration)
             string nonCalibratedFilePath = Path.Combine(unitTestFolder, nonCalibratedFile);
-            File.Copy(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SmallCalibratible_Yeast.mzML"), nonCalibratedFilePath, true);
+            File.Copy(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData", "SmallCalibratible_Yeast.mzML"), nonCalibratedFilePath, true);
 
             // protein db
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\smalldb.fasta");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData", "smalldb.fasta");
 
             // set up original experimental design (input to calibration)
             SpectraFileInfo fileInfo = new(nonCalibratedFilePath, "condition", 0, 0, 0);
@@ -86,8 +85,8 @@ namespace Test
                 scoreCutoff: 1);
 
             string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestCalibrationLow");
-            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\TaGe_SA_A549_3_snip.mzML");
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\TaGe_SA_A549_3_snip.fasta");
+            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","TaGe_SA_A549_3_snip.mzML");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","TaGe_SA_A549_3_snip.fasta");
             Directory.CreateDirectory(outputFolder);
 
             calibrationTask.RunTask(outputFolder, new List<DbForTask> { new DbForTask(myDatabase, false) }, new List<string> { myFile }, "test");
@@ -116,7 +115,7 @@ namespace Test
 
             // set up original spectra file (input to calibration)
             string nonCalibratedFilePath = Path.Combine(unitTestFolder, nonCalibratedFile);
-            File.Copy(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SmallCalibratible_Yeast.mzML"), nonCalibratedFilePath, true);
+            File.Copy(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SmallCalibratible_Yeast.mzML"), nonCalibratedFilePath, true);
 
             // set up original experimental design (input to calibration)
             SpectraFileInfo fileInfo = new(nonCalibratedFilePath, "condition", 0, 0, 0);
@@ -127,7 +126,7 @@ namespace Test
             SearchTask searchTask = new SearchTask();
 
             // protein db
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\smalldb.fasta");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","smalldb.fasta");
 
             // run the tasks
             EverythingRunnerEngine a = new EverythingRunnerEngine(
@@ -174,14 +173,14 @@ namespace Test
             
             // set up original spectra file (input to calibration)
             string nonCalibratedFilePath = Path.Combine(unitTestFolder, "filename1.mzML");
-            File.Copy(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SmallCalibratible_Yeast.mzML"), nonCalibratedFilePath, true);
+            File.Copy(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SmallCalibratible_Yeast.mzML"), nonCalibratedFilePath, true);
 
             // set up original BAD experimental design (input to calibration)
             string experimentalDesignPath = Path.Combine(unitTestFolder, "ExperimentalDesign.tsv");
             File.Copy(badExperimentalDesignPath, experimentalDesignPath, true);
             
             // protein db
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\smalldb.fasta");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","smalldb.fasta");
 
             // run calibration
             CalibrationTask calibrationTask = new CalibrationTask();

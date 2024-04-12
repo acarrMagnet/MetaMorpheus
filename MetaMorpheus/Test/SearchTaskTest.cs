@@ -104,8 +104,8 @@ namespace Test
                     digestionParams: new DigestionParams(minPeptideLength: 7, searchModeType: CleavageSpecificity.Semi, fragmentationTerminus: FragmentationTerminus.N))
             };
 
-            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\tinySemi.mgf");
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\semiTest.fasta");
+            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","tinySemi.mgf");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","semiTest.fasta");
             DbForTask db = new DbForTask(myDatabase, false);
 
             List<(string, MetaMorpheusTask)> taskList = new List<(string, MetaMorpheusTask)> { ("TestSemiSpecificSmall", searchTask) };
@@ -114,11 +114,11 @@ namespace Test
             var engine = new EverythingRunnerEngine(taskList, new List<string> { myFile }, new List<DbForTask> { new DbForTask(myDatabase, false) }, Environment.CurrentDirectory);
             engine.Run();
 
-            string outputPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestSemiSpecificSmall\AllPSMs.psmtsv");
+            string outputPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestSemiSpecificSmall","AllPSMs.psmtsv");
             var output = File.ReadAllLines(outputPath);
             Assert.IsTrue(output.Length == 3);
 
-            var mzId = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestSemiSpecificSmall\tinySemi.mzID"));
+            var mzId = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestSemiSpecificSmall","tinySemi.mzID"));
             Assert.That(mzId[115].Equals("          <cvParam name=\"mzML format\" cvRef=\"PSI-MS\" accession=\"MS:1000584\" />"));
             Assert.That(mzId[118].Equals("          <cvParam name=\"mzML unique identifier\" cvRef=\"PSI-MS\" accession=\"MS:1001530\" />"));
             Assert.That(mzId[97].Equals("        <cvParam name=\"pep:FDR threshold\" value=\"0.01\" cvRef=\"PSI-MS\" accession=\"MS:1001448\" />"));
@@ -137,8 +137,8 @@ namespace Test
                 FragmentationTerminus.C
             };
             string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestSemiSpecific");
-            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PrunedDbSpectra.mzml");
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\DbForPrunedDb.fasta");
+            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","PrunedDbSpectra.mzml");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","DbForPrunedDb.fasta");
             foreach (FragmentationTerminus fragTerm in terminiToTest)
             {
                 SearchTask searchTask = new SearchTask()
@@ -163,7 +163,7 @@ namespace Test
                 var engine = new EverythingRunnerEngine(taskList, new List<string> { myFile }, new List<DbForTask> { new DbForTask(myDatabase, false) }, outputFolder);
                 engine.Run();
 
-                string outputPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestSemiSpecific\TestSemiSpecific\AllPSMs.psmtsv");
+                string outputPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestSemiSpecific","TestSemiSpecific","AllPSMs.psmtsv");
                 var output = File.ReadAllLines(outputPath);
                 Assert.That(output.Length == 12); //if N is only producing 11 lines, then the c is not being searched with it. //Possibly 13 lines if decon changes because of missed mono
             }
@@ -192,8 +192,8 @@ namespace Test
                        ("Common Biological", "Acetylation on X")  })
             };
 
-            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\InternalTest.mgf");
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\InternalTest.fasta");
+            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","InternalTest.mgf");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","InternalTest.fasta");
             DbForTask db = new DbForTask(myDatabase, false);
 
             List<(string, MetaMorpheusTask)> taskList = new List<(string, MetaMorpheusTask)> { ("TestInternal", searchTask) };
@@ -202,7 +202,7 @@ namespace Test
             var engine = new EverythingRunnerEngine(taskList, new List<string> { myFile }, new List<DbForTask> { new DbForTask(myDatabase, false) }, Environment.CurrentDirectory);
             engine.Run();
 
-            string outputPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestInternal\AllPSMs.psmtsv");
+            string outputPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestInternal","AllPSMs.psmtsv");
             //var output = File.ReadAllLines(outputPath);
             //read the psmtsv
             List<PsmFromTsv> psms = PsmTsvReader.ReadTsv(outputPath, out var warning);
@@ -256,10 +256,10 @@ namespace Test
                 },
             };
 
-            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PrunedDbSpectra.mzml");
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\DbForPrunedDb.fasta");
+            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","PrunedDbSpectra.mzml");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","DbForPrunedDb.fasta");
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestNormalizationExperDesign");
-            string experimentalDesignFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\ExperimentalDesign.tsv");
+            string experimentalDesignFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","ExperimentalDesign.tsv");
             using (StreamWriter output = new StreamWriter(experimentalDesignFile))
             {
                 output.WriteLine("FileName\tCondition\tBiorep\tFraction\tTechrep");
@@ -301,8 +301,8 @@ namespace Test
                 },
             };
 
-            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PrunedDbSpectra.mzml");
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\DbForPrunedDb.fasta");
+            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","PrunedDbSpectra.mzml");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","DbForPrunedDb.fasta");
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestProteinGroupsNoParsimony");
 
             DbForTask db = new DbForTask(myDatabase, false);
@@ -326,10 +326,10 @@ namespace Test
                 },
             };
 
-            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PrunedDbSpectra.mzml");
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\DbForPrunedDb.fasta");
+            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","PrunedDbSpectra.mzml");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","DbForPrunedDb.fasta");
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestNormalization");
-            string filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\ExperimentalDesign.tsv");
+            string filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","ExperimentalDesign.tsv");
 
             // contaminant DB
             DbForTask db = new DbForTask(myDatabase, true);
@@ -348,10 +348,10 @@ namespace Test
         [Test]
         public static void PeptideFDRTest()
         {
-            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PrunedDbSpectra.mzml");
-            string myFile2 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PrunedDbSpectra2.mzml");
+            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","PrunedDbSpectra.mzml");
+            string myFile2 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","PrunedDbSpectra2.mzml");
             if (!File.Exists(myFile2)) { File.Copy(myFile, myFile2); }
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\DbForPrunedDb.fasta");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","DbForPrunedDb.fasta");
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestPeptideFDR");
             DbForTask db = new DbForTask(myDatabase, true);
             Directory.CreateDirectory(folderPath);
@@ -541,8 +541,8 @@ namespace Test
                 CommonParameters = new CommonParameters(dissociationType: DissociationType.Autodetect, pepQValueThreshold: 0.01, qValueThreshold: 1.0)
             };
 
-            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SmallCalibratible_Yeast.mzML");
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\smalldb.fasta");
+            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SmallCalibratible_Yeast.mzML");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","smalldb.fasta");
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestAutodetectDissocationTypeFromScanHeader");
 
             DbForTask db = new DbForTask(myDatabase, false);
@@ -597,8 +597,8 @@ namespace Test
                     pepQValueThreshold: 0.02, qValueThreshold: 1.0)
             };
 
-            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SmallCalibratible_Yeast.mzML");
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\smalldb.fasta");
+            string myFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SmallCalibratible_Yeast.mzML");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","smalldb.fasta");
             string folderPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestPepFiltering");
 
             DbForTask db = new DbForTask(myDatabase, false);

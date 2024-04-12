@@ -53,19 +53,19 @@ namespace Test
             _ = task.RunTask(outputFolder, new List<DbForTask> { new DbForTask(xmlName, false) }, new List<string> { mzmlName }, "taskId1").ToString();
 
             //test proteins
-            string[] output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedProteinGroups.tsv");
+            string[] output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestSilac","AllQuantifiedProteinGroups.tsv"));
             Assert.AreEqual(output.Length, 2);
             Assert.IsTrue(output[0].Contains("Modification Info List\tIntensity_silac(R+3.988)\tIntensity_silac(R+10.008)")); //test that two files were made and no light file
             Assert.IsTrue(output[1].Contains("875000.0000000009\t437500.00000000047")); //test the heavier intensity is half that of the heavy (per the raw file)
 
             //test peptides
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedPeptides.tsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestSilac","AllQuantifiedPeptides.tsv"));
             Assert.AreEqual(output.Length, 2);
             Assert.IsTrue(output[0].Contains("Organism\tIntensity_silac(R+3.988)\tIntensity_silac(R+10.008)")); //test the two files were made and no light file
             Assert.IsTrue(output[1].Contains("875000\t437500")); //test intensity
 
             //test peaks
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedPeaks.tsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestSilac","AllQuantifiedPeaks.tsv"));
             Assert.AreEqual(output.Length, 3);
             Assert.IsTrue(output[1].Contains("silac\t")); //test the filename was NOT modified (it was for proteins, but we don't want it for peptides)
             Assert.IsTrue(output[2].Contains("silac\t"));//test the filename was NOT modified (it was for proteins, but we don't want it for peptides)
@@ -75,7 +75,7 @@ namespace Test
             Assert.IsTrue(output[2].Contains("965.46")); //test heavy mass
 
             //test PSMs
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllPSMs.psmtsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory ,@"TestSilac","AllPSMs.psmtsv"));
             Assert.IsTrue(output[1].Contains("959.44")); //test the correct monoisotopic mass
             Assert.IsTrue(output[1].Contains("PEPTIDER(+3.988)")); //test the correct psm
             Assert.IsTrue(output[1].Contains("silac\t")); //test the filename was NOT modified (it was for proteins, but we don't want it for peptides)
@@ -126,13 +126,13 @@ namespace Test
             _ = task.RunTask(outputFolder, new List<DbForTask> { new DbForTask(xmlName, false) }, new List<string> { mzmlName }, "taskId1");
 
             //test proteins
-            string[] output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedProteinGroups.tsv");
+            string[] output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestSilac","AllQuantifiedProteinGroups.tsv"));
             Assert.AreEqual(output.Length, 2);
             Assert.IsTrue(output[0].Contains("Intensity_silac\tIntensity_silac(K+8.014 & R+6.020)")); //test that two files were made
             Assert.IsTrue(output[1].Contains("1374999.999999999\t687499.9999999995")); //test the heavy intensity is half that of the light (per the raw file)
 
             //test peptides
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedPeptides.tsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory,@"TestSilac","AllQuantifiedPeptides.tsv"));
             Assert.AreEqual(output.Length, 2);
             Assert.IsTrue(output[1].Contains("SEQENEWITHAKANDANR\taccession1\t"));//test the sequence and accession were not modified
             Assert.IsTrue(output[1].Contains("1375000")); //test intensity
@@ -140,7 +140,7 @@ namespace Test
             Assert.IsTrue(output[1].Contains("687500")); //test intensity
 
             //test peaks
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedPeaks.tsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestSilac","AllQuantifiedPeaks.tsv"));
             Assert.AreEqual(output.Length, 3);
             Assert.IsTrue(output[1].Contains("silac\t")); //test the filename was NOT modified (it was for proteins, but we don't want it for peptides)
             Assert.IsTrue(output[2].Contains("silac\t"));//test the filename was NOT modified (it was for proteins, but we don't want it for peptides)
@@ -208,8 +208,8 @@ namespace Test
             _ = Directory.CreateDirectory(outputFolder);
             string theStringResult = task.RunTask(outputFolder, new List<DbForTask> { new DbForTask(xmlName, false) }, new List<string> { mzmlName, mzmlName2 }, "taskId1").ToString();
 
-            string mzIDPath1 = Path.ChangeExtension(TestContext.CurrentContext.TestDirectory + @"\TestSilac\Individual File Results\" + mzmlName, ".mzID");
-            string mzIDPath2 = Path.ChangeExtension(TestContext.CurrentContext.TestDirectory + @"\TestSilac\Individual File Results\" + mzmlName2, ".mzID");
+            string mzIDPath1 = Path.ChangeExtension(Path.Combine(TestContext.CurrentContext.TestDirectory , "TestSilac","Individual File Results", mzmlName), ".mzID");
+            string mzIDPath2 = Path.ChangeExtension( Path.Combine(TestContext.CurrentContext.TestDirectory,"TestSilac","Individual File Results",mzmlName2), ".mzID");
             Assert.IsTrue(File.Exists(mzIDPath1));
             Assert.IsTrue(File.Exists(mzIDPath2));
 
@@ -217,13 +217,13 @@ namespace Test
 
             ///Normal Peptide
             //test proteins
-            string[] output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestSilac\AllQuantifiedProteinGroups.tsv");
+            string[] output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory,"TestSilac","AllQuantifiedProteinGroups.tsv"));
             Assert.AreEqual(output.Length, 2);
             Assert.IsTrue(output[0].Contains("Intensity_silac\tIntensity_silacPart2\tIntensity_silac(K+8.014)\tIntensity_silacPart2(K+8.014)")); //test that two files were made
             Assert.IsTrue(output[1].Contains("875000.0000000009\t875000.0000000009\t437500.00000000047\t437500.00000000047")); //test the heavy intensity is half that of the light (per the raw file)
 
             //test peptides
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestSilac\AllQuantifiedPeptides.tsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac","AllQuantifiedPeptides.tsv"));
             Assert.AreEqual(output.Length, 2);
             Assert.IsTrue(output[1].Contains("PEPTIDEK\taccession1\t"));//test the sequence and accession were not modified
             Assert.IsTrue(output[1].Contains("875000")); //test intensity
@@ -231,7 +231,7 @@ namespace Test
             Assert.IsTrue(output[1].Contains("437500")); //test intensity
 
             //test peaks
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"\TestSilac\AllQuantifiedPeaks.tsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac","AllQuantifiedPeaks.tsv"));
             Assert.AreEqual(output.Length, 5);
             Assert.IsTrue(output[1].Contains("silac\t")); //test the filename was NOT modified (it was for proteins, but we don't want it for peptides)
             Assert.IsTrue(output[2].Contains("silac\t"));//test the filename was NOT modified (it was for proteins, but we don't want it for peptides)
@@ -259,7 +259,7 @@ namespace Test
             _ = Directory.CreateDirectory(outputFolder);
             _ = task.RunTask(outputFolder, new List<DbForTask> { new DbForTask(xmlName, false) }, new List<string> { mzmlName }, "taskId1").ToString();
 
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllPSMs.psmtsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory,"TestSilac","AllPSMs.psmtsv"));
             Assert.IsTrue(output[1].Contains("silac\t")); //test the filename was NOT modified (it was for proteins, but we don't want it for peptides)
             Assert.IsTrue(output[1].Contains("PEPTIDEK(+8.014)|PEPTLDEK(+8.014)|PEPTIDEK(+8.014)")
                 || output[1].Contains("PEPTIDEK(+8.014)|PEPTIDEK(+8.014)|PEPTLDEK(+8.014)")
@@ -278,7 +278,7 @@ namespace Test
             _ = Directory.CreateDirectory(outputFolder);
             _ = task.RunTask(outputFolder, new List<DbForTask> { new DbForTask(xmlName, false) }, new List<string> { mzmlName }, "taskId1").ToString();
 
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllPSMs.psmtsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac","AllPSMs.psmtsv"));
             Assert.IsTrue(output[1].Contains("accession1|accession2")
                 || output[1].Contains("accession2|accession1")); //test the heavy ambiguous peptides were all found
             //Need the options, because output isn't consistent as of 3/26/19
@@ -374,13 +374,13 @@ namespace Test
             Directory.CreateDirectory(outputFolder);
             task.RunTask(outputFolder, new List<DbForTask> { new DbForTask(xmlName, false) }, new List<string> { mzmlName, mzmlName2 }, "taskId1").ToString();
 
-            string[] output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedPeptides.tsv");
+            string[] output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac","AllQuantifiedPeptides.tsv"));
             Assert.IsTrue(output[1].Contains("PEPTKIDEK\t")); //test the unlabeled is present
             Assert.IsTrue(output[0].Contains("\tIntensity_silac_Original\tIntensity_silac_NewlySynthesized\tIntensity_silacPart2_Original\tIntensity_silacPart2_NewlySynthesized\t" +
                 "Detection Type_silac_Original\tDetection Type_silac_NewlySynthesized\tDetection Type_silacPart2_Original\tDetection Type_silacPart2_NewlySynthesized")); //test filename changes
             Assert.IsTrue(output[1].Contains("\t1093750\t437500\t")); //test intensities
 
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedPeaks.tsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac","AllQuantifiedPeaks.tsv"));
             Assert.AreEqual(output.Length, 7); //header, (unlabeled, mixed, labeled)*2 files
             Assert.IsTrue(output[1].Contains("\tPEPTKIDEK\t")); //test the unlabeled is present
             Assert.IsTrue(output[1].Contains("\t875000\t")); //test intensity
@@ -410,15 +410,15 @@ namespace Test
             Readers.MzmlMethods.CreateAndWriteMyMzmlWithCalibratedSpectra(myMsDataFile1, mzmlName, false);
             task.RunTask(outputFolder, new List<DbForTask> { new DbForTask(xmlName, false) }, new List<string> { mzmlName }, "taskId1").ToString();
 
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedPeptides.tsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac", "AllQuantifiedPeaks.tsv"));
             Assert.IsTrue(output[1].Contains("PEPTKIDEK\t")); //test the unlabeled is present
             Assert.IsTrue(output[0].Contains("\tIntensity_silac_Original\tIntensity_silac_NewlySynthesized\tDetection Type_silac_Original\tDetection Type_silac_NewlySynthesized")); //test filename changes
             Assert.IsTrue(output[1].Contains("\t656250\t875000\t")); //test intensities
 
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllPSMs.psmtsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac", "AllQuantifiedPeaks.tsv"));
             Assert.IsTrue(output[1].Contains("\tPEPTK(+1.994)IDEK(+8.014)\t")); //test the identified sequence is output
 
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedPeaks.tsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac", "AllQuantifiedPeaks.tsv"));
             Assert.AreEqual(output.Length, 4); //header, unlabeled, mixed, labeled
             Assert.IsTrue(output[3].Contains("\tPEPTK(+8.014)IDEK(+8.014)\t")); //test the original is present
             Assert.IsTrue(output[3].Contains("\t218750\t")); //test intensity
@@ -450,14 +450,14 @@ namespace Test
             Readers.MzmlMethods.CreateAndWriteMyMzmlWithCalibratedSpectra(myMsDataFile1, mzmlName, false);
             task.RunTask(outputFolder, new List<DbForTask> { new DbForTask(xmlName, false) }, new List<string> { mzmlName }, "taskId1").ToString();
 
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedPeptides.tsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac", "AllQuantifiedPeaks.tsv"));
             Assert.IsTrue(output[1].Contains("PEPEPEPTK\t")); //test the unlabeled is present
             Assert.IsTrue(output[2].Contains("PEPTKIDEK\t")); //test the unlabeled is present
             Assert.IsTrue(output[0].Contains("\tIntensity_silac_Original\tIntensity_silac_NewlySynthesized\tDetection Type_silac_Original\tDetection Type_silac_NewlySynthesized")); //test filename changes
             Assert.IsTrue(output[1].Contains("\t2625000\t6125000\t")); //test the light intensity is not negative.
             Assert.IsTrue(output[2].Contains("\t10500000\t5250000\t")); //test intensities. The observation is 9/6/3.
 
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedProteinGroups.tsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac", "AllQuantifiedPeaks.tsv"));
             //test sequence coverage and output worked from multiple labels
             Assert.IsTrue(output[1].Contains("PEPTK(+8.014)IDEK(+8.014)|PEPEPEPTK(+1.994)"));
             Assert.IsTrue(output[1].Contains("PEPEPEPTKidekPEPTKIDEKa\tPEPEPEPTKidekPEPTKIDEKa\tPEPEPEPTKidekPEPTKIDEKa"));
@@ -511,16 +511,16 @@ namespace Test
             Directory.CreateDirectory(outputFolder);
             var theStringResult = task.RunTask(outputFolder, new List<DbForTask> { new DbForTask(xmlName, false) }, new List<string> { mzmlName }, "taskId1").ToString();
 
-            string[] output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedPeaks.tsv");
+            string[] output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac", "AllQuantifiedPeaks.tsv"));
             Assert.IsTrue(output.Length == 4);
             Assert.IsTrue(output[1].Contains("\tPEPTK(+8.014)IDEK\t") && output[1].Contains("\t875000\t")); //Doesn't matter where the +8.014 is, just matters that it's mixed (one is light, one is heavy)
 
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllQuantifiedProteinGroups.tsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac", "AllQuantifiedPeaks.tsv"));
             Assert.IsTrue(output[1].Contains("\t\t\t\t1\t")); //check that no intensity is present when only a single missed cleavage value exists
             Assert.IsTrue(output[1].Contains("\t1\tPEPTKIDEK\tPEPTKIDEK\t")); //check that the sequence coverage isn't PEPTaIDEa
             Assert.IsTrue(output[1].Contains("\t1\tPEPTKIDEK(+8.014)\t")); //check that the peptide id'd has the +8
 
-            output = File.ReadAllLines(TestContext.CurrentContext.TestDirectory + @"/TestSilac/AllPeptides.psmtsv");
+            output = File.ReadAllLines(Path.Combine(TestContext.CurrentContext.TestDirectory, "TestSilac", "AllQuantifiedPeaks.tsv"));
             Assert.IsTrue(output.Length == 2);
             Assert.IsTrue(output[1].Contains("\tPEPTKIDEK(+8.014)\t")); //ensure the order is correct here for the id (not PEPTK(+8.014)IDEK)
 

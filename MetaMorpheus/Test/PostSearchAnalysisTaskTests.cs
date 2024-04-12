@@ -13,12 +13,12 @@ namespace Test
         public static void AllResultsAndResultsTxtTests()
         {
             //First test that AllResults and Results display correct numbers of peptides and psms with q-value filter on
-            string myTomlPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\Task1-SearchTaskconfig.toml");
+            string myTomlPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","Task1-SearchTaskconfig.toml");
             SearchTask searchTaskLoaded = Toml.ReadFile<SearchTask>(myTomlPath, MetaMorpheusTask.tomlConfig);
-            string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\PostSearchAnalysisTaskTest");
-            string myFile1 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\TaGe_SA_A549_3_snip.mzML");
-            string myFile2 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\TaGe_SA_A549_3_snip_2.mzML");
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\TaGe_SA_A549_3_snip.fasta");
+            string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","PostSearchAnalysisTaskTest");
+            string myFile1 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","TaGe_SA_A549_3_snip.mzML");
+            string myFile2 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","TaGe_SA_A549_3_snip_2.mzML");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","TaGe_SA_A549_3_snip.fasta");
 
             EverythingRunnerEngine engineToml = new(new List<(string, MetaMorpheusTask)> { ("postSearchAnalysisTaskTestOutput", searchTaskLoaded) }, new List<string> { myFile1, myFile2 }, new List<DbForTask> { new DbForTask(myDatabase, false) }, outputFolder);
             engineToml.Run();
@@ -47,7 +47,7 @@ namespace Test
             Assert.AreEqual("TaGe_SA_A549_3_snip_2 Target peptides with q-value = 0.01 : " + TaGe_SA_A549_3_snip_2ExpectedPeptides, allResults[28]);
             Assert.AreEqual("Target protein groups within 1 % FDR in TaGe_SA_A549_3_snip_2: 165", allResults[25]);
 
-            string resultsFile = Path.Combine(outputFolder, @"postSearchAnalysisTaskTestOutput\results.txt");
+            string resultsFile = Path.Combine(outputFolder, @"postSearchAnalysisTaskTestOutput","results.txt");
             string[] results = File.ReadAllLines(resultsFile);
             Assert.AreEqual("All target PSMs with q-value = 0.01: 428", results[7]);
             Assert.AreEqual("All target peptides with q-value = 0.01 : 174", results[8]);
@@ -76,7 +76,7 @@ namespace Test
             Assert.AreEqual("All target protein groups with q-value = 0.01 (1% FDR): 165", singleFileResults[9]);
 
             //Second test that AllResults and Results display correct numbers of peptides and psms with PEP q-value filter on
-            myTomlPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\Task2-SearchTaskconfig.toml");
+            myTomlPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","Task2-SearchTaskconfig.toml");
             searchTaskLoaded = Toml.ReadFile<SearchTask>(myTomlPath, MetaMorpheusTask.tomlConfig);
             engineToml = new EverythingRunnerEngine(new List<(string, MetaMorpheusTask)> { ("postSearchAnalysisTaskTestOutput", searchTaskLoaded) }, new List<string> { myFile1, myFile2 }, new List<DbForTask> { new DbForTask(myDatabase, false) }, outputFolder);
             engineToml.Run();
@@ -94,7 +94,7 @@ namespace Test
             Assert.AreEqual("TaGe_SA_A549_3_snip_2 Target peptides with pep q-value = 0.01 : 182", allResults[28]);
 
 
-            resultsFile = Path.Combine(outputFolder, @"postSearchAnalysisTaskTestOutput\results.txt");
+            resultsFile = Path.Combine(outputFolder, @"postSearchAnalysisTaskTestOutput","results.txt");
             results = File.ReadAllLines(resultsFile);
             Assert.AreEqual("All target PSMs with pep q-value = 0.01: 501", results[7]);
             Assert.AreEqual("All target peptides with pep q-value = 0.01 : 182", results[8]);

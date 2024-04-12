@@ -23,8 +23,8 @@ namespace Test
             //The purpose of this test is to ensure that mgfs can be run without crashing.
             //Whenever a new feature is added that may require things an mgf does not have,
             //there should be a check that prevents mgfs from using that feature.
-            string mgfName = @"TestData\ok.mgf";
-            string xmlName = @"TestData\okk.xml";
+            string mgfName = Path.Combine(TestContext.CurrentContext.TestDirectory,@"TestData","ok.mgf");
+            string xmlName = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","okk.xml");
             string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestLoadAndRunMgf");
 
             SearchTask task1 = new()

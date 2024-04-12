@@ -203,8 +203,8 @@ namespace Test
                 }
             };
             List<(string, MetaMorpheusTask)> taskList = new List<(string, MetaMorpheusTask)> { ("task1", task1), ("task2", task2) };
-            string mzmlName = @"TestData\PrunedDbSpectra.mzml";
-            string fastaName = @"TestData\DbForPrunedDb.fasta";
+            string mzmlName = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","PrunedDbSpectra.mzml");
+            string fastaName = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","DbForPrunedDb.fasta");
             string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestPrunedGeneration");
             var engine = new EverythingRunnerEngine(taskList, new List<string> { mzmlName }, new List<DbForTask> { new DbForTask(fastaName, false) }, outputFolder);
             engine.Run();

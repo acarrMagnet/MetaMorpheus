@@ -39,7 +39,7 @@ namespace Test
             {
                 new Protein("AAAHSSLK", ""),new Protein("RQPAQPR", ""),new Protein("EKAEAEAEK", "")
             };
-            var myMsDataFile = Mzml.LoadAllStaticData(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SmallCalibratible_Yeast.mzML"));
+            var myMsDataFile = Mzml.LoadAllStaticData(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SmallCalibratible_Yeast.mzML"));
 
 
             var searchMode = new SinglePpmAroundZeroSearchMode(5);
@@ -142,7 +142,7 @@ namespace Test
                 new Protein("MPKVYSYQEVAEHNGPENFWIIIDDKVYDVSQFKDEHPGGDEIIMDLGGQDATESFVDIGHSDEALRLLKGLYIGDVDKTSERVSVEKVSTSENQSKGSGTLVVILAILMLGVAYYLLNE", "P40312")
             };
 
-            var myMsDataFile = Mzml.LoadAllStaticData(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TopDownTestData\slicedTDYeast.mzML"));
+            var myMsDataFile = Mzml.LoadAllStaticData(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TopDownTestData","slicedTDYeast.mzML"));
 
             var searchMode = new SinglePpmAroundZeroSearchMode(5);
 
@@ -203,7 +203,7 @@ namespace Test
             {
                 new Protein("AAAHSSLK", ""),new Protein("RQPAQPR", ""),new Protein("EKAEAEAEK", "")
             };
-            var myMsDataFile = Mzml.LoadAllStaticData(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SmallCalibratible_Yeast.mzML"));
+            var myMsDataFile = Mzml.LoadAllStaticData(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SmallCalibratible_Yeast.mzML"));
 
 
             var searchMode = new SinglePpmAroundZeroSearchMode(5);
@@ -257,7 +257,7 @@ namespace Test
                 new Protein ("KKAEDGINK",""),new Protein("AVNSISLK", ""),new Protein("EKAEAEAEK", ""), new Protein("DITANLR",""), new Protein("QNAIGTAK",""),
                 new Protein("FHKSQLNK",""),new Protein ("KQVAQWNK",""),new Protein ("NTRIEELK",""),new Protein("RQPAQPR", ""),
             };
-            var myMsDataFile = Mzml.LoadAllStaticData(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SmallCalibratible_Yeast.mzML"));
+            var myMsDataFile = Mzml.LoadAllStaticData(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SmallCalibratible_Yeast.mzML"));
 
 
             var searchMode = new SinglePpmAroundZeroSearchMode(5);
@@ -267,7 +267,7 @@ namespace Test
             var listOfSortedms2Scans = MetaMorpheusTask.GetMs2Scans(myMsDataFile, null, new CommonParameters()).OrderBy(b => b.PrecursorMass).ToArray();
 
 
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\myPrositLib.msp");
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","myPrositLib.msp");
 
             var testLibrary = new SpectralLibrary(new List<string> { path });
 
@@ -349,18 +349,18 @@ namespace Test
         [Test]
         public static void TestLibraryGeneration()
         {
-            string thisTaskOutputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\FileOutput");
+            string thisTaskOutputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","FileOutput");
             _ = Directory.CreateDirectory(thisTaskOutputFolder);
 
-            SearchTask task = Toml.ReadFile<SearchTask>(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\SpectralSearchTask.toml"), MetaMorpheusTask.tomlConfig);
+            SearchTask task = Toml.ReadFile<SearchTask>(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","SpectralSearchTask.toml"), MetaMorpheusTask.tomlConfig);
             task.SearchParameters.WriteMzId = true;
             task.SearchParameters.WriteSpectralLibrary = true;
 
-            DbForTask db1 = new(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\TaGe_SA_A549_3_snip.fasta"),false);
-            DbForTask db2 = new(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\hela_snip_for_unitTest.fasta"), false);
+            DbForTask db1 = new(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","TaGe_SA_A549_3_snip.fasta"),false);
+            DbForTask db2 = new(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","hela_snip_for_unitTest.fasta"), false);
 
-            string raw1 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\TaGe_SA_A549_3_snip.mzML");
-            string raw2 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\TaGe_SA_HeLa_04_subset_longestSeq.mzML");
+            string raw1 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","TaGe_SA_A549_3_snip.mzML");
+            string raw2 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","TaGe_SA_HeLa_04_subset_longestSeq.mzML");
             
             EverythingRunnerEngine MassSpectraFile = new(new List<(string, MetaMorpheusTask)> { ("SpectraFileOutput", task) }, new List<string> { raw1, raw2 }, new List<DbForTask> { db1,db2 }, thisTaskOutputFolder);
 
@@ -370,7 +370,7 @@ namespace Test
             var lib = new SpectralLibrary(new List<string> { Path.Combine(thisTaskOutputFolder, matchingvalue) });
             var libPath = Path.Combine(thisTaskOutputFolder, matchingvalue);
            
-            string testDir = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibraryGenaration");
+            string testDir = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibraryGenaration");
             string outputDir = Path.Combine(testDir, @"SpectralLibraryTest");
 
             _ = Directory.CreateDirectory(outputDir);
@@ -381,7 +381,7 @@ namespace Test
 
             var engine = new EverythingRunnerEngine(taskList, new List<string> { raw1,raw2 }, new List<DbForTask> { db1,db2,new DbForTask(libPath, false) }, outputDir);
             engine.Run();
-            var test11 = Path.Combine(outputDir, @"ClassicSearch\AllPSMs.psmtsv");
+            var test11 = Path.Combine(outputDir, @"ClassicSearch","AllPSMs.psmtsv");
             string[] results = System.IO.File.ReadAllLines(test11);
             string[] split = results[0].Split('\t');
             int ind = Array.IndexOf(split, "Normalized Spectral Angle");
@@ -407,22 +407,22 @@ namespace Test
 
         public static void TestLibraryUpdate()
         {
-            string thisTaskOutputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\UpdateLibrary");
+            string thisTaskOutputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","UpdateLibrary");
             _ = Directory.CreateDirectory(thisTaskOutputFolder);
-            SearchTask task = Toml.ReadFile<SearchTask>(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\SpectralSearchTask.toml"), MetaMorpheusTask.tomlConfig);
+            SearchTask task = Toml.ReadFile<SearchTask>(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","SpectralSearchTask.toml"), MetaMorpheusTask.tomlConfig);
 
             //update library
             task.SearchParameters.UpdateSpectralLibrary = true;
             task.SearchParameters.MassDiffAcceptorType = MassDiffAcceptorType.Exact;
 
-            string db1 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\hela_snip_for_unitTest.fasta");
-            string db2 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\TaGe_SA_A549_3_snip.fasta");
-            string raw1 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\TaGe_SA_HeLa_04_subset_longestSeq.mzML");
-            string raw2 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\TaGe_SA_A549_3_snip.mzML");
-            string lib = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\SpectralLibrary.msp");
+            string db1 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","hela_snip_for_unitTest.fasta");
+            string db2 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","TaGe_SA_A549_3_snip.fasta");
+            string raw1 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","TaGe_SA_HeLa_04_subset_longestSeq.mzML");
+            string raw2 = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","TaGe_SA_A549_3_snip.mzML");
+            string lib = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","SpectralLibrary.msp");
 
 
-            string rawCopy = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\UpdateLibrary\rawCopy.mzML");
+            string rawCopy = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","UpdateLibrary","rawCopy.mzML");
             System.IO.File.Copy(raw1, rawCopy);
 
             EverythingRunnerEngine UpdateLibrary = new(new List<(string, MetaMorpheusTask)> { ("UpdateSpectraFileOutput", task) }, new List<string> { raw1, raw2 }, new List<DbForTask> { new DbForTask(lib, false), new DbForTask( db1,false), new DbForTask(db2, false) }, thisTaskOutputFolder);
@@ -478,14 +478,14 @@ namespace Test
 
         public static void TestLibraryExistAfterGPTMDsearch()
         {
-            string thisTaskOutputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\UpdateLibrary");
+            string thisTaskOutputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","UpdateLibrary");
             _ = Directory.CreateDirectory(thisTaskOutputFolder);
-            SearchTask task = Toml.ReadFile<SearchTask>(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\SpectralSearchTask.toml"), MetaMorpheusTask.tomlConfig);
+            SearchTask task = Toml.ReadFile<SearchTask>(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","SpectralSearchTask.toml"), MetaMorpheusTask.tomlConfig);
 
    
-            string db = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\hela_snip_for_unitTest.fasta");
-            string raw = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\TaGe_SA_HeLa_04_subset_longestSeq.mzML");
-            string lib = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\SpectralLibrary.msp");
+            string db = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","hela_snip_for_unitTest.fasta");
+            string raw = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","TaGe_SA_HeLa_04_subset_longestSeq.mzML");
+            string lib = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","SpectralLibrary.msp");
             
             GptmdTask GptmdTask = new();
             MyTaskResults afterGPTMD = GptmdTask.RunTask(thisTaskOutputFolder, new List<DbForTask> { new DbForTask(db, false), new DbForTask(lib, false) }, new List<string> { raw }, "test");
@@ -499,12 +499,12 @@ namespace Test
         public static void TestLibrarySpectrumCalculateSpectralAngleOnTheFly()
         {
 
-            var librarySpectrumPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\SLSNVIAHEISHSWTGNLVTNK.msp");
+            var librarySpectrumPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","SLSNVIAHEISHSWTGNLVTNK.msp");
             var testLibrary = new SpectralLibrary(new List<string> { librarySpectrumPath });
             testLibrary.TryGetSpectrum("SLSNVIAHEISHSWTGNLVTNK", 3, out var spectrum);
 
 
-            string psmsPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\SLSNVIAHEISHSWTGNLVTNK.psmtsv");
+            string psmsPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","SLSNVIAHEISHSWTGNLVTNK.psmtsv");
             List<PsmFromTsv> psms = PsmTsvReader.ReadTsv(psmsPath, out List<string> warnings).Where(p => p.AmbiguityLevel == "1").ToList();
 
             var computedSpectralSimilarity = spectrum.CalculateSpectralAngleOnTheFly(psms[0].MatchedIons);

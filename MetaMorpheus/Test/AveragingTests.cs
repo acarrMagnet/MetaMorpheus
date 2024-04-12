@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using EngineLayer;
 using FlashLFQ;
-using GuiFunctions;
 using MassSpectrometry;
 using NUnit.Framework;
 using Readers;
@@ -43,7 +42,7 @@ namespace Test
         public static void TestAveragingAllScans()
         {
             // load in everything necessary
-            string spectraFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\sliced_b6.mzML");
+            string spectraFile = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","sliced_b6.mzML");
             string testPath = Path.Combine(TestFolder, "TestAveragingAll");
             Directory.CreateDirectory(testPath);
 
@@ -83,7 +82,7 @@ namespace Test
         {
             // load in everything necessary
             string spectraFile = Path.Combine(TestContext.CurrentContext.TestDirectory,
-                @"TestData\SmallCalibratible_Yeast.mzML");
+                @"TestData","SmallCalibratible_Yeast.mzML");
             string testPath = Path.Combine(TestFolder, "TestAveragingEveryNScans");
             Directory.CreateDirectory(testPath);
 
@@ -124,7 +123,7 @@ namespace Test
         {
             // load in everything necessary
             string spectraFile = Path.Combine(TestContext.CurrentContext.TestDirectory,
-                @"TestData\SmallCalibratible_Yeast.mzML");
+                @"TestData","SmallCalibratible_Yeast.mzML");
             string testPath = Path.Combine(TestFolder, "TestAveragingDdaScans");
             Directory.CreateDirectory(testPath);
 
@@ -174,10 +173,10 @@ namespace Test
         {
             // load in everything necessary
             string spectraFile = Path.Combine(TestContext.CurrentContext.TestDirectory,
-                @"TestData\SmallCalibratible_Yeast.mzML");
+                @"TestData","SmallCalibratible_Yeast.mzML");
             string testPath = Path.Combine(TestFolder, "TestAveragingExperimentalDesign");
             Directory.CreateDirectory(testPath);
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\smalldb.fasta");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","smalldb.fasta");
             SpectralAveragingParameters options = new SpectralAveragingParameters()
             {
                 SpectraFileAveragingType = SpectraFileAveragingType.AverageDdaScans,
@@ -233,10 +232,10 @@ namespace Test
         {
             // load in everything necessary
             string spectraFile = Path.Combine(TestContext.CurrentContext.TestDirectory,
-                @"TestData\SmallCalibratible_Yeast.mzML");
+                @"TestData","SmallCalibratible_Yeast.mzML");
             string testPath = Path.Combine(TestFolder, "TestAveragingExperimentalDesignErrors");
             Directory.CreateDirectory(testPath);
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\smalldb.fasta");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","smalldb.fasta");
             SpectralAveragingParameters options = new SpectralAveragingParameters()
             {
                 SpectraFileAveragingType = SpectraFileAveragingType.AverageDdaScans,
@@ -295,9 +294,9 @@ namespace Test
         {
             // load in everything necessary
             string spectraFile = Path.Combine(TestContext.CurrentContext.TestDirectory,
-                @"TestData\SmallCalibratible_Yeast.mzML");
+                @"TestData","SmallCalibratible_Yeast.mzML");
             string testPath = Path.Combine(TestFolder, "TestAveragingWithOtherTasks");
-            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\smalldb.fasta");
+            string myDatabase = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","smalldb.fasta");
             Directory.CreateDirectory(testPath);
 
             SpectralAveragingParameters parameters = new SpectralAveragingParameters()

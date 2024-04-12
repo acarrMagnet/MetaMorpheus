@@ -543,14 +543,15 @@ namespace Test
 
             List<(string, MetaMorpheusTask)> taskList = new List<(string, MetaMorpheusTask)> { ("TestPepXmlOutput", search) };
 
-            string mzmlName = @"TestData\PrunedDbSpectra.mzml";
-            string fastaName = @"TestData\DbForPrunedDb.fasta";
+            string mzmlName = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","PrunedDbSpectra.mzml");
+            string fastaName =
+                Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData", "DbForPrunedDb.fasta"); 
             string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestPepXmlOutput");
 
             var engine = new EverythingRunnerEngine(taskList, new List<string> { mzmlName }, new List<DbForTask> { new DbForTask(fastaName, false) }, outputFolder);
             engine.Run();
 
-            string outputPepXmlPath = Path.Combine(outputFolder, @"TestPepXmlOutput\PrunedDbSpectra.pep.XML");
+            string outputPepXmlPath = Path.Combine(outputFolder, @"TestPepXmlOutput","PrunedDbSpectra.pep.XML");
             Assert.That(File.Exists(outputPepXmlPath));
             Directory.Delete(outputFolder, true);
         }
@@ -571,17 +572,17 @@ namespace Test
 
             List<(string, MetaMorpheusTask)> taskList = new List<(string, MetaMorpheusTask)> { ("ClassicSearch", classicSearch), ("ModernSearch", modernSearch) };
 
-            string mzmlName = @"TestData\PrunedDbSpectra.mzml";
-            string fastaName = @"TestData\DbForPrunedDb.fasta";
+            string mzmlName = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","PrunedDbSpectra.mzml");
+            string fastaName = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","DbForPrunedDb.fasta");
             string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestPepXmlOutput");
 
             var engine = new EverythingRunnerEngine(taskList, new List<string> { mzmlName }, new List<DbForTask> { new DbForTask(fastaName, false) }, outputFolder);
             engine.Run();
 
-            string classicPath = Path.Combine(outputFolder, @"ClassicSearch\AllPSMs.psmtsv");
+            string classicPath = Path.Combine(outputFolder, @"ClassicSearch","AllPSMs.psmtsv");
             var classicPsms = File.ReadAllLines(classicPath).ToList();
 
-            string modernPath = Path.Combine(outputFolder, @"ModernSearch\AllPSMs.psmtsv");
+            string modernPath = Path.Combine(outputFolder, @"ModernSearch","AllPSMs.psmtsv");
             var modernPsms = File.ReadAllLines(modernPath).ToList();
             counts.Add(modernPsms.Count);
 
@@ -593,7 +594,7 @@ namespace Test
         public static void CheckOpenFileTest()
         {
             var manager = new MyFileManager(true);
-            Assert.That(manager.SeeIfOpen(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\allResults.txt")) == false);
+            Assert.That(manager.SeeIfOpen(Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","allResults.txt")) == false);
         }
 
         [Test]
@@ -604,8 +605,9 @@ namespace Test
 
             List<(string, MetaMorpheusTask)> taskList = new() { ("ClassicSearch", classicSearch)};
 
-            string mzmlName = @"TestData\PrunedDbSpectra.mzml";
-            string fastaName = @"TestData\SpectralLibrarySearch\P16858_target.msp";
+            string mzmlName = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","PrunedDbSpectra.mzml");
+            string fastaName = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData",
+                "SpectralLibrarySearch", "P16858_target.msp"); 
             string outputFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestMspNoXML");
 
             var engine = new EverythingRunnerEngine(taskList, new List<string> { mzmlName }, new List<DbForTask> { new DbForTask(fastaName, false) }, outputFolder);

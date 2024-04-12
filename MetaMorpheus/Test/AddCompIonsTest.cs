@@ -22,6 +22,7 @@ using UsefulProteomicsDatabases;
 namespace Test
 {
     [TestFixture]
+    [Parallelizable]
     internal static class AddCompIonsTest
     {
         [Test]

@@ -20,7 +20,7 @@ namespace Test
         [Test]
         public static void SpectralLibraryReaderTest()
         {
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\myPrositLib.msp");
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","myPrositLib.msp");
 
             var testLibraryWithoutDecoy = new SpectralLibrary(new List<string> { path });
             var librarySpectra = testLibraryWithoutDecoy.GetAllLibrarySpectra().ToList();
@@ -82,7 +82,7 @@ namespace Test
             }
 
             // write the library w/ the ToString method
-            var writtenPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\testLibraryToString.msp");
+            var writtenPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","testLibraryToString.msp");
             var str = librarySpectra.SelectMany(p => p.ToString().Split(new char[] { '\n' }));
             File.WriteAllLines(writtenPath, str);
 
@@ -120,7 +120,7 @@ namespace Test
         [Test]
         public static void SpectralLibrarySearchTest()
         {
-            var testDir = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch");
+            var testDir = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch");
             var outputDir = Path.Combine(testDir, @"SpectralLibrarySearchTest");
 
             string library1 = Path.Combine(testDir, @"P16858_target.msp");
@@ -159,7 +159,7 @@ namespace Test
         [Test]
         public static void AnotherSpectralLibrarySearchTest()
         {
-            var testDir = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch");
+            var testDir = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch");
             string myFile = Path.Combine(testDir, @"slicedMouse.raw");
             MyFileManager myFileManager = new MyFileManager(true);
             CommonParameters commonParameters = new CommonParameters(maxThreadsToUsePerFile: 1, scoreCutoff: 1);
@@ -201,7 +201,7 @@ namespace Test
         [Test]
         public static void AnotherSpectralLibrarySearchTestDecoy()
         {
-            var testDir = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch");
+            var testDir = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch");
             string myFile = Path.Combine(testDir, @"slicedMouse.raw");
             MyFileManager myFileManager = new MyFileManager(true);
             CommonParameters commonParameters = new CommonParameters(maxThreadsToUsePerFile: 1, scoreCutoff: 1);
@@ -241,7 +241,7 @@ namespace Test
         [Test]
         public static void SpectralLibraryReaderTestNeutralLoss()
         {
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\spectralLibraryNeutralLossTest.msp");
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","spectralLibraryNeutralLossTest.msp");
 
             var testLibraryWithoutDecoy = new SpectralLibrary(new List<string> { path });
             var librarySpectra = testLibraryWithoutDecoy.GetAllLibrarySpectra().ToList();
@@ -295,7 +295,7 @@ namespace Test
             }
 
             // write the library w/ the ToString method
-            var writtenPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\testLibraryToString.msp");
+            var writtenPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","testLibraryToString.msp");
             var str = librarySpectra.SelectMany(p => p.ToString().Split(new char[] { '\n' }));
             File.WriteAllLines(writtenPath, str);
 
@@ -331,7 +331,7 @@ namespace Test
         [Test]
         public static void SpectralLibraryReaderTest_pDeep()
         {
-            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\SpectralLibrarySearch\yeast2fake_pdeep_lib.msp");
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","SpectralLibrarySearch","yeast2fake_pdeep_lib.msp");
 
             var testLibraryWithoutDecoy = new SpectralLibrary(new List<string> { path });
             var librarySpectra = testLibraryWithoutDecoy.GetAllLibrarySpectra().ToList();
@@ -373,7 +373,7 @@ namespace Test
             }
 
             // write the library w/ the ToString method
-            var writtenPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData\testLibraryToString.msp");
+            var writtenPath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestData","testLibraryToString.msp");
             var str = librarySpectra.SelectMany(p => p.ToString().Split(new char[] { '\n' }));
             File.WriteAllLines(writtenPath, str);
 
